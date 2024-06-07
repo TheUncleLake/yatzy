@@ -1,4 +1,7 @@
 
-var rollNo = 0;
-var dice = Array(5);
-var keptDice = [];
+var gameState = {
+    rollNo: 0,
+    dice: Array(5),
+    keptDice: [],
+    scoreBox: {}
+};
