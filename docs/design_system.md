@@ -4,5 +4,11 @@ A single-player game where 5 dice are rolled each turn. After each roll, the pla
 
 ## Appearance
 
+### General
+
 - Fonts: Arial, sans-serif
 - Colors: Brown frame, dark green board, white dice with black dots, white table with green text (sometimes red text) and lines
+
+### Dice
+
+Five dice will appear on the dark green board when the player rolls the dice. Each dice will be shown in bird's eye view as a rounded square. The number of black dots on the die when viewed from above indicates the value of the roll. After rolling the dice, clicking on a die on the dark green board puts it into a separate rectangular tray, which indicates which dice the player keeps. The dice that remain in the board will be rerolled if the player chooses to do so.
