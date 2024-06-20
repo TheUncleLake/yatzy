@@ -1,0 +1,50 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    font-family: Arial, sans-serif;
+    font-size: 1.6rem;
+}
+
+.board {
+    float: left;
+    background: green;
+    background: radial-gradient(lightgreen, green);
+    padding: 40px;
+    width: 60%;
+    height: 100vh;
+    border-width: 10px;
+    border-style: inset;
+    border-color: saddlebrown;
+    box-shadow: inset 0px 0px 10px 5px darkgreen;
+}
+
+.scorebox {
+    float: left;
+    background: lightgray;
+    box-shadow: inset 0px 0px 5px 5px dimgray;
+    padding: 1vh 1%;
+    width: 40%;
+    height: 100vh;
+    
+}
+
+table, th, td {
+    color: darkgreen;
+    border: 5px solid darkgreen;
+    border-collapse: collapse;
+}
+
+.game:after {
+    content: "";
+    display: table;
+    clear: both;
+}
