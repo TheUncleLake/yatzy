@@ -1,3 +1,4 @@
+/* General */
 * {
     box-sizing: border-box;
 }
@@ -15,6 +16,13 @@ body {
     font-size: 1.6rem;
 }
 
+.game:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Board */
 .board {
     float: left;
     background: green;
@@ -64,6 +72,7 @@ body {
     right: 5%
 }
 
+/* Score Box */
 .scorebox {
     float: left;
     background: lightgray;
@@ -78,10 +87,4 @@ table, th, td {
     padding: 5px;
     border: 5px solid darkgreen;
     border-collapse: collapse;
-}
-
-.game:after {
-    content: "";
-    display: table;
-    clear: both;
 }

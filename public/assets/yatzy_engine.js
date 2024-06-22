@@ -61,7 +61,7 @@ function checkNGroups(n, k) {
                 m--;
             }
         }
-        return sum;
+        return m == 0 ? sum : 0;
     }
 }
 
