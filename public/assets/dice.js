@@ -4,6 +4,6 @@ function rollDie() {
 }
 
 function rollDice(dice, idx) { // modifies the dice array, idx contains indices of which dice to reroll
-    for (let i = 0; i < idx.length; i++) dice[idx[i]] = rollDie();
+    for (i of idx) dice[i] = rollDie();
     return dice;
 }

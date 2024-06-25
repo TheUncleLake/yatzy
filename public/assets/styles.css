@@ -92,21 +92,22 @@ body {
 
 .die {
     margin: 2vh 5%;
-    background-color: #ccc;
+    border-radius: 15px;
+    background: lightgray;
+    background: radial-gradient(white, lightgray);
+    box-shadow: rgba(0,0,0,.6) 0 3px 3px 3px;
     width: min(10vw, 10vh);
     height: min(10vw, 10vh);
 }
+.die:hover {
+    opacity: 0.5;
+}
+.die:active {
+    opacity: 0.75;
+}
 
-.tray {
-    position: absolute;
-    left: 10%;
-    bottom: 18%;
-    width: 80%;
-    height: 20%;
-    background-color: antiquewhite;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.selected {
+    background: rgba(163, 163, 163, 0.5) !important;
 }
 
 /* Score Box */
