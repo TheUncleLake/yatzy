@@ -1,5 +1,5 @@
 
-var scoreBoxFunctions = {
+const scoreBoxFunctions = {
     // Upper section
     ones: sumNDice(1),
     twos: sumNDice(2),
