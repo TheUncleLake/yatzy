@@ -32,13 +32,34 @@ const gameState = {
         gameState.rollNo++;
         btnRoll.disabled = (gameState.rollNo >= 3);
         board.innerHTML = "";
-        for (const die of dice) board.appendChild(die);
+        for (let i = 0; i < dice.length; i++) {
+            dice[i].innerHTML = "";
+            board.appendChild(dice[i]);
+            dice[i].className = dice[i].className.replace(/(?:^|\s)d\d(?!\S)/g, '');
+            dice[i].classList.add("d" + gameState.dice[i]);
+            let col = [];
+            if (gameState.dice[i] >= 4) {
+                for (let j = 0; j <= 1 + (gameState.dice[i] % 2); j++) {
+                    col[j] = document.createElement("div");
+                    col[j].classList.add("col");
+                    dice[i].appendChild(col[j]);
+                }
+            }
+            for (let j = 0; j < gameState.dice[i]; j++) {
+                const elem = document.createElement("span");
+                elem.classList.add("dot");
+                if (gameState.dice[i] >= 4)
+                    col[(j + 2) % col.length].appendChild(elem);
+                else dice[i].appendChild(elem);
+            }
+        }
     });
     btnStart.addEventListener("click", () => {
         gameState.rollNo = 0;
         gameState.keptDice.clear();
         gameState.scoreBox = {};
         board.innerHTML = "";
+        btnRoll.disabled = false;
         for (const die of dice) die.classList.remove("selected");
     });
 })();
