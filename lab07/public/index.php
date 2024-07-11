@@ -1,25 +1,16 @@
 <?php
 require_once('_config.php');
-?>
 
-<html>
-    <head>
-        <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    </head>
-    <body>
-        <div id="die1">--</div>
-        <button id="roll">Roll</button>
-        <script>
-            const die1 = document.getElementById("die1");
-            const roll = document.getElementById("roll");
-            roll.onclick = async function() {
-                let answer = $.ajax({
-                    type: "GET",
-                    url: "api.php?action=roll"
-                }).then(function(data) {
-                    die1.innerHTML = data.value;
-                });
-            };
-        </script>
-    </body>
-</html>
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Factory\AppFactory;
+
+$app = AppFactory::create();
+
+$app->get('/', function (Request $request, Response $response, $args) {
+    $view = file_get_contents("{$GLOBALS["appDir"]}/views/index.html");
+    $response->getBody()->write($view);
+    return $response;
+});
+
+$app->run();
