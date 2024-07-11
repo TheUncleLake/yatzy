@@ -55,7 +55,8 @@ function checkNGroups(n, k) {
     return function(dice) {
         let sum = 0;
         let counts = countDice(dice);
-        for (let i = 5, m = n; i >= 0 && m > 0; i--) {
+        let m = n;
+        for (let i = 5; i >= 0 && m > 0; i--) {
             if (counts[i] >= k) {
                 sum += k * (i+1);
                 m--;

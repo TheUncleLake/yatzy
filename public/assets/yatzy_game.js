@@ -11,6 +11,7 @@ const gameState = {
     const btnStart = document.getElementById("btnStart");
     const board = document.querySelector(".dice");
     const dice = [];
+    // Initialize dice
     for (let i = 0; i < 5; i++) {
         const elem = document.createElement("div");
         elem.classList.add("die");
@@ -25,6 +26,7 @@ const gameState = {
         });
         dice.push(elem);
     }
+    // Roll Dice button
     btnRoll.addEventListener("click", () => {
         if (gameState.rollNo >= 3) return;
         const list = (new Set([0,1,2,3,4])).difference(gameState.keptDice);
@@ -32,6 +34,7 @@ const gameState = {
         gameState.rollNo++;
         btnRoll.disabled = (gameState.rollNo >= 3);
         board.innerHTML = "";
+        // Putting dots on dice
         for (let i = 0; i < dice.length; i++) {
             dice[i].innerHTML = "";
             board.appendChild(dice[i]);
@@ -53,7 +56,14 @@ const gameState = {
                 else dice[i].appendChild(elem);
             }
         }
+        // Updating scores on score boxes
+        for (const key of Object.keys(scoreBoxFunctions)) {
+            if (key in gameState.scoreBox) continue;
+            const elem = document.getElementById(key);
+            elem.textContent = calculateScore(gameState, key);
+        }
     });
+    // Start Game button
     btnStart.addEventListener("click", () => {
         gameState.rollNo = 0;
         gameState.keptDice.clear();
