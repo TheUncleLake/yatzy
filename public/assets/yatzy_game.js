@@ -11,6 +11,7 @@ const gameState = {
     const btnStart = document.getElementById("btnStart");
     const board = document.querySelector(".dice");
     const dice = [];
+    let hasRolled = false;
     // Initialize dice
     for (let i = 0; i < 5; i++) {
         const elem = document.createElement("div");
@@ -23,16 +24,23 @@ const gameState = {
                 elem.classList.add("selected");
                 gameState.keptDice.add(i);
             }
+            btnRoll.disabled = gameState.rollNo >= 3 || gameState.rollNo > 0 && gameState.keptDice.size >= 5;
         });
         dice.push(elem);
     }
     // Roll Dice button
     btnRoll.addEventListener("click", () => {
         if (gameState.rollNo >= 3) return;
-        const list = (new Set([0,1,2,3,4])).difference(gameState.keptDice);
+        if (gameState.rollNo > 0 && gameState.keptDice.size >= 5) return;
+        let list = new Set([0,1,2,3,4]);
+        if (gameState.rollNo == 0) {
+            gameState.keptDice.clear();
+            for (const die of dice) die.classList.remove("selected");
+        }
+        else list = list.difference(gameState.keptDice);
         rollDice(gameState.dice, list);
         gameState.rollNo++;
-        btnRoll.disabled = (gameState.rollNo >= 3);
+        btnRoll.disabled = gameState.rollNo >= 3;
         board.innerHTML = "";
         // Putting dots on dice
         for (let i = 0; i < dice.length; i++) {
@@ -57,12 +65,43 @@ const gameState = {
             }
         }
         // Updating scores on score boxes
+        hasRolled = true;
         for (const key of Object.keys(scoreBoxFunctions)) {
             if (key in gameState.scoreBox) continue;
             const elem = document.getElementById(key);
             elem.textContent = calculateScore(gameState, key);
+            elem.style.color = "red";
         }
     });
+    // Score Box buttons
+    for (const key of Object.keys(scoreBoxFunctions)) {
+        const elem = document.getElementById(key);
+        elem.addEventListener("click", () => {
+            if (!hasRolled || key in gameState.scoreBox) return;
+            hasRolled = false;
+            gameState.rollNo = 0;
+            btnRoll.disabled = false;
+            gameState.scoreBox[key] = calculateScore(gameState, key);
+            elem.style.color = "green";
+            let gameOver = true;
+            for (const key of Object.keys(scoreBoxFunctions)) {
+                if (key in gameState.scoreBox) continue;
+                const elem = document.getElementById(key);
+                elem.textContent = "";
+                gameOver = false;
+            }
+            if (gameOver) {
+                gameState.rollNo = 3;
+                btnRoll.disabled = true;
+                const scoreBonus = calculateScoreBonus(gameState);
+                for (const [key, val] of Object.entries(scoreBonus)) {
+                    const elem = document.getElementById(key);
+                    elem.textContent = val;
+                    elem.style.color = "darkgoldenrod";
+                }
+            }
+        });
+    }
     // Start Game button
     btnStart.addEventListener("click", () => {
         gameState.rollNo = 0;
@@ -70,6 +109,11 @@ const gameState = {
         gameState.scoreBox = {};
         board.innerHTML = "";
         btnRoll.disabled = false;
+        hasRolled = false;
         for (const die of dice) die.classList.remove("selected");
+        for (const key of Object.keys(scoreBoxFunctions))
+            document.getElementById(key).textContent = "";
+        for (const key of ["sum", "bonus", "total"])
+            document.getElementById(key).textContent = "";
     });
 })();

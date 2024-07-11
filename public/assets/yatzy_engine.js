@@ -81,12 +81,13 @@ function calculateScore(game, scoreBox) {
 }
 
 function calculateScoreBonus(game) {
-    let keys1to6 = ['ones', 'twos', 'threes', 'fours', 'fives', 'sixes'];
+    const keys1to6 = ['ones', 'twos', 'threes', 'fours', 'fives', 'sixes'];
     let sum1to6 = 0;
     let sum = 0;
     for (key of Object.keys(scoreBoxFunctions)) {
         if (keys1to6.includes(key)) sum1to6 += game.scoreBox[key];
         sum += game.scoreBox[key];
     }
-    return {score: sum, bonus: sum1to6 >= 63 ? 50 : 0};
+    const bonus = sum1to6 >= 63 ? 50 : 0;
+    return {sum: sum1to6, bonus: bonus, total: sum + bonus};
 }
