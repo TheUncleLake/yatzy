@@ -11,7 +11,7 @@
             roll.onclick = async function() {
                 let answer = $.ajax({
                     type: "GET",
-                    url: "api.php?action=roll"
+                    url: "api/roll"
                 }).then(function(data) {
                     die1.innerHTML = data.value;
                 });
