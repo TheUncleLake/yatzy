@@ -13,6 +13,10 @@ A single-player game where 5 dice are rolled each turn. After each roll, the pla
 
 Five dice will appear on the dark green board when the player rolls the dice. Each dice will be shown in bird's eye view as rounded squares. The number of black dots on the die when viewed from above indicates the value of the roll. After rolling the dice, clicking on a die on the board turns it darker, which indicates which dice the player keeps. The dice that are not darknened in the board will be rerolled if the player chooses to do so.
 
+### Leaderboard
+
+The look and feel of the leaderboard is coded [here](assets/design_system/leaderboard.html). The font used is Segoe UI by default, but can fall back to the fonts mentioned in [General](#general). The leaderboard will be a brown tabular data with brown borders and translucent cells. It has 2 columns: Rank and Total Score.
+
 ## Game Components
 
 ### Starting a new game
