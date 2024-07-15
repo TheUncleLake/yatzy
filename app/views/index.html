@@ -1,19 +1,123 @@
 <html>
     <head>
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <style>
+            .leaderboard {
+                width: 40%;
+                height: 80%;
+                background: rgb(82, 53, 26);
+                background: radial-gradient(rgb(138, 90, 45), rgb(82,53,26));
+                margin: auto;
+                border-width: 10px;
+                border-style: ridge;
+                border-color: saddlebrown;
+            }
+            .header {
+                height: 6%;
+                font-size: 1.5rem;
+                font-family: 'Segoe UI', 'Arial', 'san-serif';
+                background: darkgreen;
+                background: radial-gradient(green, darkgreen);
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-width: 2%;
+                border-style: ridge;
+                border-color: green;
+            }
+            .content {
+                width: 100%;
+                height: 93%;
+                overflow: auto;
+                margin: auto;
+            }
+            table, th, td {
+                font-size: 1.1rem;
+                font-family: 'Segoe UI', 'Arial', 'san-serif';
+                color: white;
+                width: 100%;
+                table-layout: fixed;
+                padding: 1% 1%;
+                text-align: center;
+                box-shadow: inset;
+            }
+            th {
+                font-weight: bold;
+            }
+            tbody tr:nth-of-type(1) td:nth-of-type(1) {
+                background-color: rgb(255,215,0);
+                background-color: rgba(255,215,0,0.6);
+            }
+            tbody tr:nth-of-type(2) td:nth-of-type(1) {
+                background-color: rgb(169,169,169);
+                background-color: rgba(169,169,169,0.6);
+            }
+            tbody tr:nth-of-type(3) td:nth-of-type(1) {
+                background-color: rgb(148,109,12);
+                background-color: rgba(148,109,12,0.6);
+            }
+            th:nth-of-type(1), td:nth-of-type(1) {
+                font-weight: bold;
+                background-color: rgba(0,0,0,0.6);
+            }
+            th:nth-of-type(2), td:nth-of-type(2) {
+                background-color: rgba(0,0,0,0.4);
+            }
+            thead tr th:nth-of-type(1) {
+                width: 40%;
+            }
+        </style>
     </head>
     <body>
         <div id="die1">--</div>
         <button id="roll">Roll</button>
+        <button id="openlb">Update Leaderboard</button>
+        <div class="leaderboard">
+            <div class="header">LEADERBOARD</div>
+            <div class="content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Total Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lb">
+                    </tbody>
+                </table>
+                <span id="noscore">Be the first to score the game!</span>
+            </div>
+        </div>
         <script>
             const die1 = document.getElementById("die1");
             const roll = document.getElementById("roll");
+            const openlb = document.getElementById("openlb");
+            const lb = document.getElementById("lb");
+            const noscore = document.getElementById("noscore");
             roll.onclick = async function() {
-                let answer = $.ajax({
+                $.ajax({
                     type: "GET",
                     url: "api/roll"
                 }).then(function(data) {
                     die1.innerHTML = data.value;
+                });
+            };
+            openlb.onclick = async function() {
+                $.ajax({
+                    type: "GET",
+                    url: "api/leaderboard"
+                }).then(function(data) {
+                    lb.innerHTML = "";
+                    for (let i = 0; i < Math.min(data.leaderboard.length, 10); i++) {
+                        let tr = lb.insertRow();
+                        tr.insertCell().innerHTML = i + 1;
+                        tr.insertCell().innerHTML = data.leaderboard[i];
+                    }
+                    if (data.leaderboard.length > 0)
+                        noscore.style.display = "none";
+                    else
+                        noscore.style.display = "inline";
                 });
             };
         </script>
