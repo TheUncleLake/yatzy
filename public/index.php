@@ -32,6 +32,16 @@ $app->get('/', function (Request $request, Response $response, $args) {
     $response->getBody()->write($view);
     return $response;
 });
+$app->get('/script', function (Request $request, Response $response, $args) {
+    $view = file_get_contents("{$GLOBALS["appDir"]}/views/script.js");
+    $response->getBody()->write($view);
+    return $response->withHeader('Content-Type', 'text/javascript');
+});
+$app->get('/styles', function (Request $request, Response $response, $args) {
+    $view = file_get_contents("{$GLOBALS["appDir"]}/views/styles.css");
+    $response->getBody()->write($view);
+    return $response->withHeader('Content-Type', 'text/css');
+});
 
 $app->get('/api/version', function (Request $request, Response $response, $args) {
     $data = ["version" => "1.0"];
