@@ -1,7 +1,6 @@
-<!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Student's Yatzy Engine</title>
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -59,12 +58,12 @@
                             <th>30</th>
                         </tr>
                         <tr>
-                            <td style="text-align: right;">Sum</td>
+                            <td class="text-right">Sum</td>
                             <th id="sum"></th>
                             <th>105</th>
                         </tr>
                         <tr>
-                            <td style="text-align: right;">Bonus</td>
+                            <td class="text-right">Bonus</td>
                             <th id="bonus"></th>
                             <th>50</th>
                         </tr>
@@ -123,20 +122,22 @@
                 <button id="openlb">Leaderboard</button>
             </div>
         </div>
-        <div class="leaderboard">
-            <div class="header">LEADERBOARD</div>
-            <div class="content">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Total Score</th>
-                        </tr>
-                    </thead>
-                    <tbody id="lb">
-                    </tbody>
-                </table>
-                <span id="noscore">Be the first to score the game!</span>
+        <div class="modal">
+            <div class="leaderboard">
+                <div class="header">LEADERBOARD</div>
+                <div class="content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Total Score</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lb">
+                        </tbody>
+                    </table>
+                    <span id="noscore">Be the first to score the game!</span>
+                </div>
             </div>
         </div>
         <script type="text/javascript" src="script"></script>

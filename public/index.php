@@ -22,7 +22,7 @@ $app = AppFactory::create();
 function jsonReply(Response $response, $data) {
     $payload = json_encode($data);
     $response->getBody()->write($payload);
-    return $response->withHeader('Content-Type', 'application/json');
+    return $response->withHeader('Content-Type', 'application/json; charset=utf-8');
 }
 
 // API calls
