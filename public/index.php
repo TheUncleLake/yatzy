@@ -55,7 +55,7 @@ $app->get('/api/roll', function (Request $request, Response $response, $args) {
 });
 
 $app->get('/api/leaderboard', function (Request $request, Response $response, $args) {
-    if (count($_SESSION["leaderboard"]) < 10) { // For testing purposes
+    if (count($_SESSION["leaderboard"]) < 1) { // For testing purposes
         $d = new Dice(0, 374);
         Leaderboard::add($_SESSION["leaderboard"], $d->roll());
     } else {

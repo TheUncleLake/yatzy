@@ -249,3 +249,17 @@ body {
 .content thead tr th:nth-of-type(1) {
     width: 40%;
 }
+
+#noscore {
+    width: 80%;
+    height: min(10%, 3rem);
+    margin: auto;
+    font-size: 1.1rem;
+    font-family: 'Segoe UI', 'Arial', 'san-serif';
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
