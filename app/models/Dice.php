@@ -13,4 +13,9 @@ class Dice {
     function roll() {
         return rand($this->min, $this->max);
     }
+
+    static function roll_dice(&$dice, $idx) {
+        $d = new Dice();
+        foreach ($idx as $i) $dice[$i] = $d->roll();
+    }
 }

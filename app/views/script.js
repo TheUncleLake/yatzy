@@ -19,14 +19,16 @@
         dice.push(elem);
     }
     // Load saved game if there is one
-    function updateGame(data) {console.log(data);}
+    function updateGame(data) {
+        console.log(data);
+    }
     $.ajax({type: "GET", url: "api/loadgame"}).then(function(data) {
         updateGame(data);
     });
     // Roll Dice button
     btnRoll.onclick = async function() {
         $.ajax({type: "GET", url: "api/roll"}).then(function(data) {
-            console.log(data.value);
+            updateGame(data);
         });
     };
     // Open Leaderboard button

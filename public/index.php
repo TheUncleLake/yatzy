@@ -32,14 +32,6 @@ use Slim\Factory\AppFactory;
 
 $app = AppFactory::create();
 
-// Helper functions
-
-function jsonReply(Response $response, $data) {
-    $payload = json_encode($data);
-    $response->getBody()->write($payload);
-    return $response->withHeader('Content-Type', 'application/json; charset=utf-8');
-}
-
 // General API calls
 
 $app->get('/', function (Request $request, Response $response, $args) {
@@ -60,15 +52,30 @@ $app->get('/styles', function (Request $request, Response $response, $args) {
     return $response->withHeader('Content-Type', 'text/css');
 });
 
+// Helper functions
+
+function jsonReply(Response $response, $data) {
+    $payload = json_encode($data);
+    $response->getBody()->write($payload);
+    return $response->withHeader('Content-Type', 'application/json; charset=utf-8');
+}
+
 // Game API calls
 
 $app->get('/api/loadgame', function (Request $request, Response $response, $args) {
-    return jsonReply($response, $_SESSION["game"]);
+    global $game;
+    $data = array(
+        "rollNo" => $game->rollNo,
+        "dice" => $game->dice,
+        "keep" => $game->keep,
+        "scoreBox" => YatzyGame::output_scores($game)
+    );
+    return jsonReply($response, $data);
 });
 
 $app->get('/api/roll', function (Request $request, Response $response, $args) {
-    $d = new Dice();
-    $data = ["value" => $d->roll()];
+    global $game;
+    $data = $game->roll();
     return jsonReply($response, $data);
 });
 
