@@ -12,7 +12,7 @@
         const elem = document.createElement("div");
         elem.classList.add("die");
         elem.onclick = async function() {
-            $.ajax({type: "GET", url: "api/keep"}).then(function(data) {
+            $.ajax({type: "PUT", url: `api/select/${i}`}).then(function(data) {
                 updateGame(data);
             });
         };
@@ -51,6 +51,12 @@
                 }
             }
         }
+        if ("keep" in data) {
+            for (let i = 0; i < 5; i++) {
+                if (i in data.keep) dice[i].classList.add("selected");
+                else dice[i].classList.remove("selected");
+            }
+        }
         if ("scoreBox" in data) {
             for (const [key, val] of Object.entries(data.scoreBox)) {
                 const elem = document.getElementById(key);
@@ -66,7 +72,7 @@
     });
     // Roll Dice button
     btnRoll.onclick = async function() {
-        $.ajax({type: "GET", url: "api/roll"}).then(function(data) {
+        $.ajax({type: "PUT", url: "api/roll"}).then(function(data) {
             updateGame(data);
         });
     };

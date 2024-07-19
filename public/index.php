@@ -73,9 +73,15 @@ $app->get('/api/loadgame', function (Request $request, Response $response, $args
     return jsonReply($response, $data);
 });
 
-$app->get('/api/roll', function (Request $request, Response $response, $args) {
+$app->put('/api/roll', function (Request $request, Response $response, $args) {
     global $game;
     $data = $game->roll();
+    return jsonReply($response, $data);
+});
+
+$app->put('/api/select/{id:[0-4]}', function (Request $request, Response $response, $args) {
+    global $game;
+    $data = $game->select(isset($args["id"]) ? intval($args["id"]) : null);
     return jsonReply($response, $data);
 });
 

@@ -44,4 +44,14 @@ class YatzyGame {
             "scoreBox" => self::output_scores($this)
         );
     }
+
+    function select($idx) {
+        if (!is_int($idx)) return null;
+        if (isset($this->keep[$idx])) unset($this->keep[$idx]);
+        else $this->keep[$idx] = $idx;
+        return array(
+            "rollNo" => $this->rollNo,
+            "keep" => $this->keep
+        );
+    }
 }
