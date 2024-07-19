@@ -33,7 +33,7 @@ class YatzyGame {
         if ($this->rollNo >= 3 || $this->rollNo > 0 && count($this->keep) >= 5)
             return null;
         $list = [0,1,2,3,4];
-        if ($this->rollNo == 0) $this->$keep = array();
+        if ($this->rollNo == 0) $this->keep = array();
         else $list = array_diff($list, $this->keep);
         Dice::roll_dice($this->dice, $list);
         $this->rollNo++;

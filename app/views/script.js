@@ -60,12 +60,20 @@
             }
         }
         if ("scoreBox" in data) {
-            const ids = [];
-            for (const [key, val] of Object.entries(data.scoreBox)) {
+            const ids = [
+                "ones", "twos", "threes", "fours", "fives", "sixes",
+                "onePair", "twoPairs", "threeKind", "fourKind",
+                "smallStraight", "largeStraight", "fullHouse", "chance", "yatzy",
+                "sum", "bonus", "total"
+            ];
+            for (const key of ids) {
                 const elem = document.getElementById(key);
-                const score = Object.entries(val)[0];
-                elem.textContent = score[1];
-                elem.style.color = score[0] == 0 ? "red" : score[0] == 1 ? "green" : "darkgoldenrod";
+                if (key in data.scoreBox) {
+                    const score = Object.entries(data.scoreBox[key])[0];
+                    elem.textContent = score[1];
+                    elem.style.color = score[0] == 0 ? "red" : score[0] == 1 ? "green" : "darkgoldenrod";
+                }
+                else elem.textContent = "";
             }
         }
     }
