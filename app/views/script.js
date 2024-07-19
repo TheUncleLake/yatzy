@@ -26,28 +26,30 @@
                 btnRoll.disabled = true;
             else btnRoll.disabled = false;
         }
-        if ("dice" in data && data.dice.length == 5) {
+        if ("dice" in data) {
             board.innerHTML = "";
             // Putting dots on dice
-            for (let i = 0; i < dice.length; i++) {
-                dice[i].innerHTML = "";
-                board.appendChild(dice[i]);
-                dice[i].className = dice[i].className.replace(/(?:^|\s)d\d(?!\S)/g, '');
-                dice[i].classList.add("d" + data.dice[i]);
-                let col = [];
-                if (data.dice[i] >= 4) {
-                    for (let j = 0; j <= 1 + (data.dice[i] % 2); j++) {
-                        col[j] = document.createElement("div");
-                        col[j].classList.add("col");
-                        dice[i].appendChild(col[j]);
+            if (data.dice.length == 5) {
+                for (let i = 0; i < dice.length; i++) {
+                    dice[i].innerHTML = "";
+                    board.appendChild(dice[i]);
+                    dice[i].className = dice[i].className.replace(/(?:^|\s)d\d(?!\S)/g, '');
+                    dice[i].classList.add("d" + data.dice[i]);
+                    let col = [];
+                    if (data.dice[i] >= 4) {
+                        for (let j = 0; j <= 1 + (data.dice[i] % 2); j++) {
+                            col[j] = document.createElement("div");
+                            col[j].classList.add("col");
+                            dice[i].appendChild(col[j]);
+                        }
                     }
-                }
-                for (let j = 0; j < data.dice[i]; j++) {
-                    const elem = document.createElement("span");
-                    elem.classList.add("dot");
-                    if (data.dice[i] >= 4)
-                        col[(j + 2) % col.length].appendChild(elem);
-                    else dice[i].appendChild(elem);
+                    for (let j = 0; j < data.dice[i]; j++) {
+                        const elem = document.createElement("span");
+                        elem.classList.add("dot");
+                        if (data.dice[i] >= 4)
+                            col[(j + 2) % col.length].appendChild(elem);
+                        else dice[i].appendChild(elem);
+                    }
                 }
             }
         }
@@ -58,6 +60,7 @@
             }
         }
         if ("scoreBox" in data) {
+            const ids = [];
             for (const [key, val] of Object.entries(data.scoreBox)) {
                 const elem = document.getElementById(key);
                 const score = Object.entries(val)[0];
@@ -73,6 +76,12 @@
     // Roll Dice button
     btnRoll.onclick = async function() {
         $.ajax({type: "PUT", url: "api/roll"}).then(function(data) {
+            updateGame(data);
+        });
+    };
+    // Start Game button
+    btnStart.onclick = async function() {
+        $.ajax({type: "PUT", url: "api/restart"}).then(function(data) {
             updateGame(data);
         });
     };

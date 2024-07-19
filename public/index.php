@@ -85,6 +85,12 @@ $app->put('/api/select/{id:[0-4]}', function (Request $request, Response $respon
     return jsonReply($response, $data);
 });
 
+$app->put('/api/restart', function (Request $request, Response $response, $args) {
+    global $game;
+    $data = $game->restart();
+    return jsonReply($response, $data);
+});
+
 $app->get('/api/leaderboard', function (Request $request, Response $response, $args) {
     if (count($_SESSION["leaderboard"]) < 1) { // For testing purposes
         $d = new Dice(0, 374);

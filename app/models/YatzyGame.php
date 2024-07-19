@@ -54,4 +54,14 @@ class YatzyGame {
             "keep" => $this->keep
         );
     }
+
+    function restart() {
+        $this->__construct();
+        return array(
+            "rollNo" => $this->rollNo,
+            "dice" => $this->dice,
+            "keep" => $this->keep,
+            "scoreBox" => self::output_scores($this)
+        );
+    }
 }
