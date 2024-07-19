@@ -1,12 +1,128 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Student's Yatzy Engine</title>
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <link rel="stylesheet" type="text/css" href="styles">
     </head>
     <body>
-        <div id="die1">--</div>
-        <button id="roll">Roll</button>
-        <button id="openlb">Update Leaderboard</button>
+        <div class="game">
+            <div class="board">
+                <div class="dice"></div>
+                <button id="btnRoll" class="button bottom-left">
+                    <div class="center">Roll Dice</div>
+                </button>
+                <button id="btnStart" class="button bottom-right">
+                    <div class="center">Start Game</div>
+                </button>
+            </div>
+            <div class="scorebox">
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Score</th>
+                            <th>Max</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Ones</th>
+                            <th id="ones"></th>
+                            <th>5</th>
+                        </tr>
+                        <tr>
+                            <th>Twos</th>
+                            <th id="twos"></th>
+                            <th>10</th>
+                        </tr>
+                        <tr>
+                            <th>Threes</th>
+                            <th id="threes"></th>
+                            <th>15</th>
+                        </tr>
+                        <tr>
+                            <th>Fours</th>
+                            <th id="fours"></th>
+                            <th>20</th>
+                        </tr>
+                        <tr>
+                            <th>Fives</th>
+                            <th id="fives"></th>
+                            <th>25</th>
+                        </tr>
+                        <tr>
+                            <th>Sixes</th>
+                            <th id="sixes"></th>
+                            <th>30</th>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Sum</td>
+                            <th id="sum"></th>
+                            <th>105</th>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Bonus</td>
+                            <th id="bonus"></th>
+                            <th>50</th>
+                        </tr>
+                        <tr>
+                            <th>1 pair</th>
+                            <th id="onePair"></th>
+                            <th>12</th>
+                        </tr>
+                        <tr>
+                            <th>2 pair</th>
+                            <th id="twoPairs"></th>
+                            <th>22</th>
+                        </tr>
+                        <tr>
+                            <th>3 of a kind</th>
+                            <th id="threeKind"></th>
+                            <th>18</th>
+                        </tr>
+                        <tr>
+                            <th>4 of a kind</th>
+                            <th id="fourKind"></th>
+                            <th>24</th>
+                        </tr>
+                        <tr>
+                            <th>Small straight</th>
+                            <th id="smallStraight"></th>
+                            <th>15</th>
+                        </tr>
+                        <tr>
+                            <th>Large straight</th>
+                            <th id="largeStraight"></th>
+                            <th>20</th>
+                        </tr>
+                        <tr>
+                            <th>Full house</th>
+                            <th id="fullHouse"></th>
+                            <th>28</th>
+                        </tr>
+                        <tr>
+                            <th>Chance</th>
+                            <th id="chance"></th>
+                            <th>30</th>
+                        </tr>
+                        <tr>
+                            <th>Yatzy</th>
+                            <th id="yatzy"></th>
+                            <th>50</th>
+                        </tr>
+                        <tr>
+                            <th>TOTAL SCORE</th>
+                            <th id="total"></th>
+                            <th>374</th>
+                        </tr>
+                    </tbody>
+                </table>
+                <button id="openlb">Leaderboard</button>
+            </div>
+        </div>
         <div class="leaderboard">
             <div class="header">LEADERBOARD</div>
             <div class="content">
