@@ -18,6 +18,11 @@
         };
         dice.push(elem);
     }
+    // Load saved game if there is one
+    function updateGame(data) {console.log(data);}
+    $.ajax({type: "GET", url: "api/loadgame"}).then(function(data) {
+        updateGame(data);
+    });
     // Roll Dice button
     btnRoll.onclick = async function() {
         $.ajax({type: "GET", url: "api/roll"}).then(function(data) {
@@ -29,7 +34,7 @@
         $.ajax({type: "GET", url: "api/leaderboard"}).then(function(data) {
             lb.innerHTML = "";
             modal.style.display = "block";
-            for (let i = 0; i < Math.min(data.leaderboard.length, 10); i++) {
+            for (let i = 0; i < data.leaderboard.length; i++) {
                 let tr = lb.insertRow();
                 tr.insertCell().innerHTML = i + 1;
                 tr.insertCell().innerHTML = data.leaderboard[i];

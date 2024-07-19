@@ -1,12 +1,27 @@
 <?php
 require_once('_config.php');
 
-use Yatzy\{Dice, Leaderboard};
+use Yatzy\{Dice, YatzyGame, Leaderboard};
 
 session_start();
 
 if (!isset($_SESSION["leaderboard"])) {
     $_SESSION["leaderboard"] = array();
+}
+
+$game = new YatzyGame();
+if (!isset($_SESSION["game"])) {
+    $_SESSION["game"] = array(
+        "rollNo" => &$game->rollNo,
+        "dice" => &$game->dice,
+        "keep" => &$game->keep,
+        "scoreBox" => &$game->scoreBox
+    );
+} else {
+    $game->rollNo = &$_SESSION["game"]["rollNo"];
+    $game->dice = &$_SESSION["game"]["dice"];
+    $game->keep = &$_SESSION["game"]["keep"];
+    $game->scoreBox = &$_SESSION["game"]["scoreBox"];
 }
 
 // Set up app
@@ -25,27 +40,30 @@ function jsonReply(Response $response, $data) {
     return $response->withHeader('Content-Type', 'application/json; charset=utf-8');
 }
 
-// API calls
+// General API calls
 
 $app->get('/', function (Request $request, Response $response, $args) {
     $view = file_get_contents("{$GLOBALS["appDir"]}/views/index.html");
     $response->getBody()->write($view);
     return $response;
 });
+
 $app->get('/script', function (Request $request, Response $response, $args) {
     $view = file_get_contents("{$GLOBALS["appDir"]}/views/script.js");
     $response->getBody()->write($view);
     return $response->withHeader('Content-Type', 'text/javascript');
 });
+
 $app->get('/styles', function (Request $request, Response $response, $args) {
     $view = file_get_contents("{$GLOBALS["appDir"]}/views/styles.css");
     $response->getBody()->write($view);
     return $response->withHeader('Content-Type', 'text/css');
 });
 
-$app->get('/api/version', function (Request $request, Response $response, $args) {
-    $data = ["version" => "1.0"];
-    return jsonReply($response, $data);
+// Game API calls
+
+$app->get('/api/loadgame', function (Request $request, Response $response, $args) {
+    return jsonReply($response, $_SESSION["game"]);
 });
 
 $app->get('/api/roll', function (Request $request, Response $response, $args) {
