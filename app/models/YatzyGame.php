@@ -18,11 +18,19 @@ class YatzyGame {
 
     static function output_scores($game) {
         $result = array();
+        $gameOver = true;
         foreach (array_keys(YatzyEngine::getScoreBoxFunctions()) as $key) {
             if (array_key_exists($key, $game->scoreBox))
                 $result[$key] = [1 => $game->scoreBox[$key]];
-            else if ($game->rollNo > 0)
-                $result[$key] = [0 => YatzyEngine::calculateScore($game, $key)];
+            else {
+                $gameOver = false;
+                if ($game->rollNo > 0)
+                    $result[$key] = [0 => YatzyEngine::calculateScore($game, $key)];
+            }
+        }
+        if ($gameOver) {
+            foreach (YatzyEngine::calculateScoreBonus($game) as $key => $val)
+                $result[$key] = [2 => $val];
         }
         return $result;
     }
@@ -39,7 +47,7 @@ class YatzyGame {
             "rollNo" => $this->rollNo,
             "dice" => $this->dice,
             "keep" => $this->keep,
-            "scoreBox" => self::output_scores($this)
+            "scoreBox" => static::output_scores($this)
         );
     }
 
@@ -59,14 +67,23 @@ class YatzyGame {
             "rollNo" => $this->rollNo,
             "dice" => $this->dice,
             "keep" => $this->keep,
-            "scoreBox" => self::output_scores($this)
+            "scoreBox" => static::output_scores($this)
         );
     }
 
     function score($key) {
+        if ($this->rollNo <= 0 || array_key_exists($key, $this->scoreBox))
+            return null;
+        $this->rollNo = 0;
+        $this->scoreBox[$key] = YatzyEngine::calculateScore($this, $key);
+        $scores = static::output_scores($this);
+        if (array_key_exists("total", $scores)) {
+            $this->rollNo = 3;
+            Leaderboard::add($_SESSION["leaderboard"], $scores["total"][2]);
+        }
         return array(
             "rollNo" => $this->rollNo,
-            "scoreBox" => self::output_scores($this)
+            "scoreBox" => $scores
         );
     }
 }

@@ -26,14 +26,14 @@
     function updateGame(data) {
         if (data == null) return;
         if ("rollNo" in data) {
-            if (data.rollNo >= 3 || data.rollNo > 0 && ("keep" in data) && data.keep.length >= 5)
+            if (data.rollNo >= 3 || data.rollNo > 0 && ("keep" in data) && Object.keys(data.keep).length >= 5)
                 btnRoll.disabled = true;
             else btnRoll.disabled = false;
         }
         if ("dice" in data) {
             board.innerHTML = "";
             // Putting dots on dice
-            if (data.dice.length == 5) {
+            if (Object.keys(data.dice).length == 5) {
                 for (let i = 0; i < dice.length; i++) {
                     dice[i].innerHTML = "";
                     board.appendChild(dice[i]);
@@ -106,12 +106,12 @@
         $.ajax({type: "GET", url: "api/leaderboard"}).then(function(data) {
             lb.innerHTML = "";
             modal.style.display = "block";
-            for (let i = 0; i < data.leaderboard.length; i++) {
+            for (let i = 0; i < Object.keys(data.leaderboard).length; i++) {
                 let tr = lb.insertRow();
                 tr.insertCell().innerHTML = i + 1;
                 tr.insertCell().innerHTML = data.leaderboard[i];
             }
-            if (data.leaderboard.length > 0)
+            if (Object.keys(data.leaderboard).length > 0)
                 noscore.style.display = "none";
             else
                 noscore.style.display = "flex";

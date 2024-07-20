@@ -1,7 +1,7 @@
 <?php
 require_once('_config.php');
 
-use Yatzy\{Dice, YatzyGame, YatzyEngine, Leaderboard};
+use Yatzy\{YatzyGame, YatzyEngine, Leaderboard};
 
 session_start();
 
@@ -105,12 +105,6 @@ $app->put('/api/score/{id:' . getScoreBoxesRegex() . '}', function (Request $req
 });
 
 $app->get('/api/leaderboard', function (Request $request, Response $response, $args) {
-    if (count($_SESSION["leaderboard"]) < 1) { // For testing purposes
-        $d = new Dice(0, 374);
-        Leaderboard::add($_SESSION["leaderboard"], $d->roll());
-    } else {
-        $_SESSION["leaderboard"] = array();
-    }
     $data = ["leaderboard" => $_SESSION["leaderboard"]];
     return jsonReply($response, $data);
 });
