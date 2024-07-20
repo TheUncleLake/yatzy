@@ -33,4 +33,4 @@ The scoreboard has 2 main sections: upper section (each box in which sums all di
 
 ### End of the game
 
-After the player has filled in all of the score boxes, the game shows the total score as a separate row in the score table. The final score, along with the sum of the upper section and its bonus score, is shown in gold color, and the "Roll Dice" button is grayed out so that the player knows the game is over. The player can click the "Start Game" to start a new game.
+After the player has filled in all of the score boxes, the game shows the total score as a separate row in the score table. The final score, along with the sum of the upper section and its bonus score, is shown in gold color, and the "Roll Dice" button is grayed out so that the player knows the game is over. The player can click the "Start Game" button to start a new game.
