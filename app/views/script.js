@@ -7,6 +7,10 @@
     const noscore = document.getElementById("noscore");
     const board = document.querySelector(".dice");
     const dice = [];
+    const boxes = [
+        "ones", "twos", "threes", "fours", "fives", "sixes", "onePair", "twoPairs", "threeKind", "fourKind",
+        "smallStraight", "largeStraight", "fullHouse", "chance", "yatzy", "sum", "bonus", "total"
+    ];
     // Initialize dice
     for (let i = 0; i < 5; i++) {
         const elem = document.createElement("div");
@@ -60,13 +64,7 @@
             }
         }
         if ("scoreBox" in data) {
-            const ids = [
-                "ones", "twos", "threes", "fours", "fives", "sixes",
-                "onePair", "twoPairs", "threeKind", "fourKind",
-                "smallStraight", "largeStraight", "fullHouse", "chance", "yatzy",
-                "sum", "bonus", "total"
-            ];
-            for (const key of ids) {
+            for (const key of boxes) {
                 const elem = document.getElementById(key);
                 if (key in data.scoreBox) {
                     const score = Object.entries(data.scoreBox[key])[0];
@@ -87,6 +85,16 @@
             updateGame(data);
         });
     };
+    // Score Box buttons
+    for (const key of boxes) {
+        if (["sum", "bonus", "total"].includes(key)) continue;
+        const elem = document.getElementById(key);
+        elem.onclick = async function() {
+            $.ajax({type: "PUT", url: `api/score/${key}`}).then(function(data) {
+                updateGame(data);
+            });
+        };
+    }
     // Start Game button
     btnStart.onclick = async function() {
         $.ajax({type: "PUT", url: "api/restart"}).then(function(data) {

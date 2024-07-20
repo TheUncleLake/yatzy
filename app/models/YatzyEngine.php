@@ -2,9 +2,9 @@
 namespace Yatzy;
 
 class YatzyEngine {
-    static $scoreBoxFunctions;
+    private static $scoreBoxFunctions;
 
-    static function init() {
+    private static function init() {
         static::$scoreBoxFunctions = [
             // Upper section
             "ones" => static::sumNDice(1),
@@ -24,6 +24,11 @@ class YatzyEngine {
             "chance" => function($dice) {return static::sumAllDice($dice);},
             "yatzy" => function($dice) {return static::checkYatzy($dice);}
         ];
+    }
+
+    static function getScoreBoxFunctions() {
+        if (!isset(static::$scoreBoxFunctions)) static::init();
+        return static::$scoreBoxFunctions;
     }
 
     static function sumAllDice($dice) {
@@ -94,9 +99,11 @@ class YatzyEngine {
             if (in_array($key, $keys1to6, true)) $sum1to6 += $game->scoreBox[$key];
             $sum += $game->scoreBox[$key];
         }
+        $bonus = ($sum1to6 >= 63) ? 50 : 0;
         return [
-            "score" => $sum,
-            "bonus" => ($sum1to6 >= 63) ? 50 : 0
+            "sum" => $sum1to6,
+            "bonus" => $bonus,
+            "total" => $sum + $bonus
         ];
     }
 }

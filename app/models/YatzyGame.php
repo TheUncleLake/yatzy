@@ -18,9 +18,7 @@ class YatzyGame {
 
     static function output_scores($game) {
         $result = array();
-        if (!isset(YatzyEngine::$scoreBoxFunctions))
-            YatzyEngine::init();
-        foreach (array_keys(YatzyEngine::$scoreBoxFunctions) as $key) {
+        foreach (array_keys(YatzyEngine::getScoreBoxFunctions()) as $key) {
             if (array_key_exists($key, $game->scoreBox))
                 $result[$key] = [1 => $game->scoreBox[$key]];
             else if ($game->rollNo > 0)
@@ -61,6 +59,13 @@ class YatzyGame {
             "rollNo" => $this->rollNo,
             "dice" => $this->dice,
             "keep" => $this->keep,
+            "scoreBox" => self::output_scores($this)
+        );
+    }
+
+    function score($key) {
+        return array(
+            "rollNo" => $this->rollNo,
             "scoreBox" => self::output_scores($this)
         );
     }

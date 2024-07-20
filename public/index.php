@@ -1,7 +1,7 @@
 <?php
 require_once('_config.php');
 
-use Yatzy\{Dice, YatzyGame, Leaderboard};
+use Yatzy\{Dice, YatzyGame, YatzyEngine, Leaderboard};
 
 session_start();
 
@@ -60,6 +60,13 @@ function jsonReply(Response $response, $data) {
     return $response->withHeader('Content-Type', 'application/json; charset=utf-8');
 }
 
+function getScoreBoxesRegex() {
+    return array_reduce(array_keys(YatzyEngine::getScoreBoxFunctions()), function($carry, $item) {
+        $carry .= "|" . $item;
+        return $carry;
+    }, "");
+}
+
 // Game API calls
 
 $app->get('/api/loadgame', function (Request $request, Response $response, $args) {
@@ -88,6 +95,12 @@ $app->put('/api/select/{id:[0-4]}', function (Request $request, Response $respon
 $app->put('/api/restart', function (Request $request, Response $response, $args) {
     global $game;
     $data = $game->restart();
+    return jsonReply($response, $data);
+});
+
+$app->put('/api/score/{id:' . getScoreBoxesRegex() . '}', function (Request $request, Response $response, $args) {
+    global $game;
+    $data = $game->score(isset($args["id"]) ? $args["id"] : null);
     return jsonReply($response, $data);
 });
 
