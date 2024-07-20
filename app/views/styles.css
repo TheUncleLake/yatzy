@@ -53,8 +53,11 @@ body {
     align-items: center;
 }
 
-.center {
+.text-center {
     text-align: center;
+}
+.text-right {
+    text-align: right;
 }
 
 .button:hover {
@@ -82,8 +85,10 @@ body {
     bottom: 5%;
     right: 5%;
 }
-.text-right {
-    text-align: right;
+.top-middle {
+    position: absolute;
+    top: 5%;
+    left: 32.5%;
 }
 
 /* Dice */
